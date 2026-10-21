@@ -493,3 +493,9 @@ a.photo.placeholder { aspect-ratio: auto; min-height: 176px; padding: 20px 16px;
 .hotel-links { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 4px; }
 .hotel-links .smoke { font-size: 14px; font-weight: 700; color: var(--ink-2); }
 .hotel-links .maplink { margin-top: 0; white-space: nowrap; }
+.tl .body .s { word-break: keep-all; overflow-wrap: anywhere; }
+/* 「新宿駅東口に集合(画像有)」を、すぐ下の「Googleマップで見る」と同じ色にする */
+.popup-tl .body .t { color: var(--navy-600); }
+.popup-tl .body .t svg { width: 13px; height: 13px; vertical-align: -1px; }
+.nowrap-end { white-space: nowrap; }
+.popup-tl .body .t svg { margin-left: 3px; }

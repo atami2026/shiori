@@ -103,16 +103,18 @@ const FORBIDDEN = [
   check(await pg.locator('.day-way a.inlink[href="https://www.odakyu-travel.co.jp/departure/odawara/index.html"][target="_blank"][rel*="noopener"]').count() === 1, "2日目: 購入窓口の行き方に小田急旅行センターのリンクがない");
   check((await pg.evaluate(() => document.querySelector(".day-way").compareDocumentPosition(document.querySelector(".day-links ~ .say")) & 4)) !== 0, "2日目: 「購入窓口の行き方」が伝え方の枠より上にない");
   const dayCard = await pg.evaluate(() => document.querySelector(".card").innerText);
-  for (const x of ["購入窓口の行き方", "エスカレーターを上がり、JR改札を出たら左に進む。小田急線の改札口の正面に「小田急旅行センター", "窓口・駅員さんにはこう伝えましょう", "小田原から新宿まで、ロマンスカーの特急券と乗車券をください。", "改札には「乗車券」だけ入れる。号車・座席は特急券で確認", "ロマンスカーは「乗車券」と「特急券」の両方がないと乗れません。", "切符を買うときに領収書をもらって、なくさず持っておいてください。", "帰りの案内（10/24）", "10/24(土) 11:00チェックアウト後は自由解散です。", "交通費を渡すので、帰りの切符は各自で購入してください。チケット代は事前にお渡しします。領収書はなくさず持っておいてください。"]) check(dayCard.includes(x), `2日目: 「${x}」がない`);
+  for (const x of ["購入窓口の行き方", "エスカレーターを上がり、JR改札を出たら左に進む。小田急線の改札口の正面に「小田急旅行センター", "窓口・駅員さんにはこう伝えましょう", "小田原から新宿まで、ロマンスカーの特急券と乗車券をください。", "改札には「乗車券」だけ入れる。号車・座席は特急券で確認", "ロマンスカーは「乗車券」と「特急券」の両方がないと乗れません。", "切符を買うときに領収書をもらって、なくさず持っておいてください。", "帰りの案内（10/24）", "10/24(土) 11:00チェックアウト後は自由解散です。", "交通費を渡すので、帰りの切符は各自で購入してください。領収書はなくさずに、翌営業日に持ってきてください。"]) check(dayCard.includes(x), `2日目: 「${x}」がない`);
   // 1日目：新宿駅東口（クリックで画像、Googleマップへのリンク）
   await go("home");
   t = await pg.evaluate(() => document.querySelector(".timeline").innerText);
   for (const s of ["新宿駅東口に集合(画像有)", "熱海ニューフジヤホテル(Googleマップ)", "呑食処 えんじゅ(Googleマップ)", "Googleマップで見る", "ロマンスカーはこね25号 新宿発(乗車券だけ改札に入れる)", "号車・座席は特急券で確認"]) check(t.includes(s), `1日目: 「${s}」がない`);
   check(await pg.locator('a.sublink[href="https://maps.app.goo.gl/d1rKatw3uLTHDhho6?g_st=ac"][target="_blank"]').count() === 1, "1日目: Googleマップのリンクがない");
   const iTi = (x) => t.indexOf(x);
-  check(iTi("宴会 開始") > 0 && iTi("22:50") > iTi("宴会 開始") && iTi("宴会 終了") > iTi("22:50") && t.lastIndexOf("自由行動") > iTi("宴会 終了"), "1日目: 宴会 開始 → 22:50 宴会 終了 → 自由行動 の並びが違う");
+  check(iTi("宴会 開始") > 0 && iTi("22:15") > iTi("宴会 開始") && iTi("宴会 終了") > iTi("22:15") && t.lastIndexOf("自由行動") > iTi("宴会 終了"), "1日目: 宴会 開始 → 22:15 宴会 終了 → 自由行動 の並びが違う");
+  check(t.includes("熱海は飲み屋街いっぱい\n(・∀・)") && t.indexOf("熱海は飲み屋街いっぱい\n(・∀・)") > t.lastIndexOf("自由行動"), "1日目: 夜の自由行動の下に「熱海は飲み屋街いっぱい」「(・∀・)」が2行である");
+  check(await pg.locator("[data-pop] .t svg").count() === 1 && await pg.locator("a.sublink svg").count() === 1 && (await pg.locator("[data-pop] .t svg").evaluate((e) => e.innerHTML)) === (await pg.locator("a.sublink svg").evaluate((e) => e.innerHTML)), "1日目: 「新宿駅東口に集合(画像有)」に、「Googleマップで見る」と同じ四角の矢印マークが付いていない");
   check(await pg.locator('.timeline a.tl[href="https://maps.app.goo.gl/EBtd6uszDCZstAdp9"][target="_blank"][rel*="noopener"]').count() === 1, "1日目: ホテルチェックインがGoogleマップ（共有リンク）に飛ばない");
-  check(await pg.evaluate(() => getComputedStyle(document.querySelector('[data-pop] .t')).color) !== "rgb(31, 95, 191)", "1日目: 「画像有」の文字が青色のまま（元の色に戻す指示）");
+  check(await pg.evaluate(() => getComputedStyle(document.querySelector('[data-pop] .t')).color === getComputedStyle(document.querySelector("a.sublink")).color), "1日目: 「新宿駅東口に集合(画像有)」の色が、すぐ下の「Googleマップで見る」と違う");
   check(await pg.locator('.timeline a.tl[href="https://maps.app.goo.gl/Lg2KSqTPoxktcysi6"][target="_blank"][rel*="noopener"]').count() === 1, "1日目: 宴会開始がえんじゅのGoogleマップ（共有リンク）に飛ばない");
   await pg.click('[data-pop="shinjuku"] .t');
   await pg.waitForTimeout(400);
@@ -162,7 +164,7 @@ const FORBIDDEN = [
 
   await go("transport");
   t = await pg.evaluate(() => document.body.innerText);
-  check(t.includes("帰りの切符は各自で購入してください。チケット代は事前にお渡しします。領収書はなくさず持っておいてください。"), "交通: 帰りの案内文がない");
+  check(t.includes("交通費を渡すので、帰りの切符は各自で購入してください。領収書はなくさずに、翌営業日に持ってきてください。"), "交通: 帰りの案内文がない");
   check(t.includes("11:00チェックアウト後は自由解散"), "交通: 自由解散の案内がない");
   for (const s2 of ["乗車券", "特急券", "小田原から新宿まで、ロマンスカーの特急券と乗車券をください。", "領収書"]) check(t.includes(s2), `交通: 帰りの切符ガイド「${s2}」がない`);
 

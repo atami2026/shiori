@@ -222,11 +222,11 @@
     return '<div class="page-title"><div class="badge-ico">' + ic(icon) + "</div><div><h2" + (title.length > 9 ? ' class="long"' : "") + ">" + esc(title) + "</h2>" + (sub ? "<p>" + esc(sub) + "</p>" : "") + (extra || "") + "</div></div>";
   }
   function tlItem(it, i, nx) {
-    var sub = it.sub ? '<br><span class="s">' + (it.subUrl ? ext(it.subUrl, esc(it.sub) + " " + ic("ext"), "sublink") : esc(it.sub)) + "</span>" : "";
+    var sub = it.sub ? '<br><span class="s">' + (it.subUrl ? ext(it.subUrl, esc(it.sub) + " " + ic("ext"), "sublink") : esc(it.sub).replace(/\n/g, "<br>")) + "</span>" : "";
     var inner = (i === nx ? '<span class="now-tag">次の予定</span>' : "") + '<span class="time">' + esc(it.time) + "</span>" +
       '<span class="dot' + (it.time ? "" : " hollow") + '"></span>' +
       '<span class="circle-ico">' + ic(it.icon) + "</span>" +
-      '<span class="body"><span class="t">' + esc(it.title) + "</span>" + sub + "</span>";
+      '<span class="body"><span class="t">' + (it.popup ? esc(it.title.slice(0, -1)) + '<span class="nowrap-end">' + esc(it.title.slice(-1)) + ic("ext") + "</span>" : esc(it.title)) + "</span>" + sub + "</span>";
     var box;
     if (it.hotelMap) box = ext(T.hotel.shareMapUrl, inner, "tl");
     else if (it.banquetMap) box = ext(T.banquet.shareMapUrl, inner, "tl");
