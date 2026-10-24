@@ -31,7 +31,7 @@ URLの末尾へ `?photos=off` を付けると一時的にリンク表示、`?pho
 写真の掲載許可の問い合わせ方、公開手順、LINEの文面は `docs/幹事メモ.md` にまとめています。
 
 ## LINE共有の準備
-- `og:image` は GitHub Pages の公開URL（`https://atami2026.github.io/shiori/`）で設定済みです。別の場所で公開する場合は書き換えてください。
+- `og:image` は GitHub Pages の公開URL（`https://daichan1030.github.io/shiori/`）で設定済みです。別の場所で公開する場合は書き換えてください。
 - `sw.js` により、一度開いたあとは電波が弱くても前回の内容を表示できます（更新はネット優先で反映）。
 - `robots` は `noindex, nofollow`（検索に載せない）にしています。
 
