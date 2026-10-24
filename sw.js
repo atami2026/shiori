@@ -3,7 +3,7 @@
  * いつもネットを優先し、つながらないときだけ保存済みの内容を使います。
  * そのため幹事が data/trip.js を更新すると、次に開いたときに反映されます。
  */
-var CACHE = "atami2026-v2";
+var CACHE = "atami-shiori-v3";
 var CORE = [
   "./", "./index.html", "./assets/style.css", "./assets/app.js", "./data/trip.js",
   "./manifest.webmanifest", "./assets/icons/icon.svg", "./assets/icons/icon-192.png", "./assets/shinjuku-east.jpg"
